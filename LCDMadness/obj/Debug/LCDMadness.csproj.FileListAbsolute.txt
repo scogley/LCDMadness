@@ -1,0 +1,6 @@
+C:\Users\seancog\OneDrive\Arduino\LCDmadness\LCDMadness\LCDMadness\bin\Debug\LCDMadness.exe.config
+C:\Users\seancog\OneDrive\Arduino\LCDmadness\LCDMadness\LCDMadness\bin\Debug\LCDMadness.exe
+C:\Users\seancog\OneDrive\Arduino\LCDmadness\LCDMadness\LCDMadness\bin\Debug\LCDMadness.pdb
+C:\Users\seancog\OneDrive\Arduino\LCDmadness\LCDMadness\LCDMadness\obj\Debug\LCDMadness.csprojResolveAssemblyReference.cache
+C:\Users\seancog\OneDrive\Arduino\LCDmadness\LCDMadness\LCDMadness\obj\Debug\LCDMadness.exe
+C:\Users\seancog\OneDrive\Arduino\LCDmadness\LCDMadness\LCDMadness\obj\Debug\LCDMadness.pdb
