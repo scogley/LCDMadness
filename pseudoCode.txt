@@ -1,0 +1,21 @@
+call web api get data
+
+parse data and assign to vars
+
+VAR1 = current temp
+VAR2 = hi temp
+VAR3 = rain chance
+VAR4 = weather summary
+VAR5 = forecast summary
+
+
+connect to serial port
+
+loop(
+	crnt temp:VAR1 hi temp:VAR2
+	rain: VAR3) 
+
+sleep for 4 seconds
+
+loop(
+VAR4)
