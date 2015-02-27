@@ -1,3 +1,6 @@
+SUMMARY OF APP USAGE:
+weather data to be used for device in household that will help user determine what clothing choices they should make.
+
 call web api get data
 
 parse data and assign to vars
@@ -19,3 +22,6 @@ sleep for 4 seconds
 
 loop(
 VAR4)
+
+
+
