@@ -46,6 +46,7 @@ namespace LCDMadness
             string visibility_km = "";
             string latitude = "";
             string longitude = "";
+            string feelslike = "";
 
             var cli = new WebClient();
             string weather = cli.DownloadString(input_xml);
@@ -113,6 +114,11 @@ namespace LCDMadness
                                 reader.Read();
                                 longitude = reader.Value;
                             }
+                            else if (reader.Name.Equals("feelslike_string"))
+                            {
+                                reader.Read();
+                                feelslike = reader.Value;
+                            }
 
                             break;
                     }
@@ -130,8 +136,9 @@ namespace LCDMadness
             Console.WriteLine("Dewpoint:          " + dewpoint_string);
             Console.WriteLine("Visibility (km):   " + visibility_km);
             Console.WriteLine("Location:          " + longitude + ", " + latitude);
+            Console.WriteLine("FeelsLike:)        " + feelslike);
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] {place, temperature_string};
+            string[] weatherArray = new string[] {temperature_string,"^",feelslike};
             writeToSerial(weatherArray);
         }
         private static void writeToSerial(string [] weatherArgsArray)
@@ -166,9 +173,8 @@ namespace LCDMadness
 
                 foreach (string weatherData in weatherArgsArray)
                 {
-                    mySerialPort.Write(array1, 0, 1); // clear the screen
+                    //mySerialPort.Write(array1, 0, 1); // clear the screen
                     mySerialPort.WriteLine(weatherData);
-
                 }
             }
             catch

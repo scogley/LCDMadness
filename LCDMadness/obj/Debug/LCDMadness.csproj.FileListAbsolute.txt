@@ -10,3 +10,9 @@ C:\Users\Sean\Documents\GitHub\LCDMadness\LCDMadness\obj\Debug\LCDMadness.pdb
 C:\Users\Sean\Documents\GitHub\LCDMadness\LCDMadness\bin\Debug\LCDMadness.exe
 C:\Users\Sean\Documents\GitHub\LCDMadness\LCDMadness\bin\Debug\LCDMadness.pdb
 C:\Users\Sean\Documents\GitHub\LCDMadness\LCDMadness\obj\Debug\LCDMadness.csprojResolveAssemblyReference.cache
+D:\github\LCDMadness\LCDMadness\bin\Debug\LCDMadness.exe.config
+D:\github\LCDMadness\LCDMadness\obj\Debug\LCDMadness.exe
+D:\github\LCDMadness\LCDMadness\obj\Debug\LCDMadness.pdb
+D:\github\LCDMadness\LCDMadness\bin\Debug\LCDMadness.exe
+D:\github\LCDMadness\LCDMadness\bin\Debug\LCDMadness.pdb
+D:\github\LCDMadness\LCDMadness\obj\Debug\LCDMadness.csprojResolveAssemblyReference.cache
