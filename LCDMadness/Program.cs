@@ -19,7 +19,7 @@ namespace LCDMadness
 
             try
             {
-                string serialPort = "COM4";
+                string serialPort = "COM3";
                 SerialPort mySerialPort = new SerialPort(serialPort);
                 //SerialPort mySerialPort = new SerialPort("COM3");
 
@@ -36,14 +36,17 @@ namespace LCDMadness
 
                 char[] array1 = { '^','~','@','E','>' };
 
-                mySerialPort.Write(array1, 1, 1); // turn LCD on
-                mySerialPort.Write(array1, 0, 1); // clear the screen
-                string timeNow = System.DateTime.Now.ToShortTimeString();
-                //mySerialPort.WriteLine("hello world!");
-                mySerialPort.Write(array1, 4, 1); // form feed
-                mySerialPort.WriteLine(timeNow);
-                mySerialPort.Write(array1, 3, 1); // turn LCD off              
-                mySerialPort.Close();
+                //mySerialPort.Write(array1, 1, 1); // turn LCD on
+                //mySerialPort.Write(array1, 0, 1); // clear the screen
+                //string timeNow = System.DateTime.Now.ToShortTimeString();
+                ////mySerialPort.WriteLine("hello world!");
+                //mySerialPort.Write(array1, 4, 1); // form feed
+                //mySerialPort.WriteLine(timeNow);
+                //mySerialPort.Write(array1, 3, 1); // turn LCD off              
+                //mySerialPort.Close();
+
+                wunderground.getWeather();
+                //mySerialPort.WriteLine();
             }
             catch 
             {
