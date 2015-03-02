@@ -19,11 +19,12 @@ namespace LCDMadness
             Console.WriteLine("Starting C# Weather Undeground Web API Test...");
             string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
-            parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Springfield.xml");
-            parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/NY/New_York.xml");
-            parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/CA/Oceanside.xml");
-            parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/CA/Mission_Beach.xml");
-            parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Lorton.xml");
+            parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
+            //parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Springfield.xml");
+            //parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/NY/New_York.xml");
+            //parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/CA/Oceanside.xml");
+            //parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/CA/Mission_Beach.xml");
+            //parse("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Lorton.xml");
 
 
             // End.
@@ -130,13 +131,14 @@ namespace LCDMadness
             Console.WriteLine("Visibility (km):   " + visibility_km);
             Console.WriteLine("Location:          " + longitude + ", " + latitude);
             // now write to the LCD over the serial port
-            writeToSerial("foo");
+            string[] weatherArray = new string[] {place, temperature_string};
+            writeToSerial(weatherArray);
         }
-        private static void writeToSerial(string[] args)
+        private static void writeToSerial(string [] weatherArgsArray)
         {
             try
             {
-                string serialPort = "COM3";
+                string serialPort = "COM4"; //com3 for home pc com4 for devbox
                 SerialPort mySerialPort = new SerialPort(serialPort);
                 //SerialPort mySerialPort = new SerialPort("COM3");
 
@@ -162,8 +164,12 @@ namespace LCDMadness
                 //mySerialPort.Write(array1, 3, 1); // turn LCD off              
                 //mySerialPort.Close();
 
-                wunderground.getWeather();
-                //mySerialPort.WriteLine();
+                foreach (string weatherData in weatherArgsArray)
+                {
+                    mySerialPort.Write(array1, 0, 1); // clear the screen
+                    mySerialPort.WriteLine(weatherData);
+
+                }
             }
             catch
             {
