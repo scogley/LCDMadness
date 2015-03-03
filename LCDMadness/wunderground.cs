@@ -13,7 +13,7 @@ namespace LCDMadness
 {
     class wunderground
     {
-        public static void getWeather()
+        public static void GetWeather()
         {
             //Start wunderground API request
             Console.WriteLine("Starting C# Weather Undeground Web API Test...");
@@ -145,7 +145,7 @@ namespace LCDMadness
         {
             try
             {
-                string serialPort = "COM4"; //com3 for home pc com4 for devbox
+                string serialPort = "COM3"; //com3 for home pc com4 for devbox
                 SerialPort mySerialPort = new SerialPort(serialPort);
                 //SerialPort mySerialPort = new SerialPort("COM3");
 
@@ -177,9 +177,10 @@ namespace LCDMadness
                     mySerialPort.WriteLine(weatherData);
                 }
             }
-            catch
+            catch(Exception e)
             {
                 //TODO: SOME ERROR HANDLING HERE
+                Console.WriteLine(e.ToString());
             }
         }
     }
