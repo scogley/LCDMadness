@@ -47,6 +47,7 @@ namespace LCDMadness
             string latitude = "";
             string longitude = "";
             string feelslike = "";
+            string temp_f = "";
 
             var cli = new WebClient();
             string weather = cli.DownloadString(input_xml);
@@ -119,7 +120,11 @@ namespace LCDMadness
                                 reader.Read();
                                 feelslike = reader.Value;
                             }
-
+                            else if (reader.Name.Equals("temp_f"))
+                            {
+                                reader.Read();
+                                temp_f = reader.Value;                                
+                            }
                             break;
                     }
                 }
@@ -137,6 +142,17 @@ namespace LCDMadness
             Console.WriteLine("Visibility (km):   " + visibility_km);
             Console.WriteLine("Location:          " + longitude + ", " + latitude);
             Console.WriteLine("FeelsLike:)        " + feelslike);
+            Console.WriteLine("TempF:)            " + temp_f);
+            
+            
+            // logic for temperature
+            //int intTemp_f = Convert.ToInt32(temp_f);
+
+            //if (intTemp_f > 32)
+            //{
+            //    Console.WriteLine("it's not going to freeze!");
+            //}
+
             // now write to the LCD over the serial port
             string[] weatherArray = new string[] {temperature_string,"^",feelslike};
             writeToSerial(weatherArray);
