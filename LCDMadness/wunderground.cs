@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Xml;
+using System.Xml.Linq;
 using System.IO;
 using System.IO.Ports;
+
 
 
 namespace LCDMadness
@@ -22,15 +24,17 @@ namespace LCDMadness
 
             //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
             parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+            //parseForecastLinq("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
             
-
-
             // End.
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
         }
         // info on parsing XML is here: https://msdn.microsoft.com/en-us/library/system.xml.xmlreader.read(v=vs.110).aspx
-        // general XML reader info here:https://msdn.microsoft.com/en-us/library/system.xml.xmlreader(v=vs.110).aspx
+        // info on parsing XML with elements of the same name: http://stackoverflow.com/questions/13642633/using-xmlreader-class-to-parse-xml-with-elements-of-the-same-name
+        // tips on using Linq and XElement are here: http://www.dotnetperls.com/xelement
+        
+
         // parse Conditions
         private static void parseConditions(string input_xml)
         {
@@ -162,6 +166,7 @@ namespace LCDMadness
         {
             //Variables
             string fcttext = "";
+            string todayForecastHiTempF = "";
           
             var cli = new WebClient();
             string weather = cli.DownloadString(input_xml);
@@ -175,17 +180,25 @@ namespace LCDMadness
                         case XmlNodeType.Element:
                         {
                             // I only want to set the value for fcttext to the first occurence (which is today's forecast).
-                            // Using IF to prevent updating this value again when looping and encountering element name fcttext
+                            // Using IF to prevent updating this value again when looping and encountering element name fcttext again
                             if (fcttext == "")
                             {
                                 if (reader.Name.Equals("fcttext"))
                                 {
                                     reader.Read();
-                                    fcttext = reader.Value;
+                                    fcttext = reader.Value;                                    
                                 }
                             }
-                            //else if(true)
-                            //{//TODO put more values here}
+                            // I only want to set the value for the first fahrenheight element (today's forecast).
+                            // Using IF to prevent updating this value again when looping and encountering element name fahrenheight again
+                            else if (todayForecastHiTempF == "")
+                            { 
+                                if (reader.Name.Equals("fahrenheit"))                            
+                                {
+                                    reader.Read();
+                                    todayForecastHiTempF = reader.Value;                                                                
+                                } 
+                            }
                             break;
                         }
                     }
@@ -193,12 +206,71 @@ namespace LCDMadness
             }
 
             Console.WriteLine("********************");
-            Console.WriteLine("fcttext:)            " + fcttext);
+            Console.WriteLine("fcttext:            " + fcttext);
+            Console.WriteLine("high temp:          " + todayForecastHiTempF);
 
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] { fcttext };
+            string[] weatherArray = new string[] {fcttext, todayForecastHiTempF};
             writeToSerial(weatherArray);
         }
+
+        private static void parseForecastLinq(string input_xml)             
+        {
+            //Variables
+            string fahrenheit = "";
+          
+            var cli = new WebClient();
+            string weather = cli.DownloadString(input_xml);
+
+            var reader = XmlReader.Create(new StringReader(weather));
+            // using XElement from system.xml.linq
+            XElement element = XElement.Load(reader, LoadOptions.SetBaseUri);
+
+            IEnumerable<XElement> items = element.DescendantsAndSelf();
+
+            foreach (var xElement in items) 
+            {
+                fahrenheit = GetAttributeValue("high", xElement);
+            }
+            
+            Console.WriteLine("********************");
+            Console.WriteLine("high:            " + fahrenheit);
+
+            // now write to the LCD over the serial port
+            string[] weatherArray = new string[] { fahrenheit };
+            writeToSerial(weatherArray);
+        }
+        private static string GetElementValue(string elementName, string attributeName, XElement element)
+        {
+            XElement xElement = element.Element(elementName);
+
+            string value = string.Empty;
+
+            if (xElement != null)
+            {
+                XAttribute xAttribute = xElement.Attribute(attributeName);
+
+                if (xAttribute != null)
+                {
+                    value = xAttribute.Value;
+                }
+            }
+
+            return value;
+        }
+        private static string GetAttributeValue(string attributeName, XElement element)
+        {
+            XAttribute xAttribute = element.Attribute(attributeName);
+
+            string value = string.Empty;
+            if (xAttribute != null)
+            {
+                value = xAttribute.Value;
+            }
+
+            return value;
+        }
+        
         // write to the LCD screen using serial
         private static void writeToSerial(string [] weatherArgsArray)
         {
@@ -230,9 +302,9 @@ namespace LCDMadness
                 //mySerialPort.Write(array1, 3, 1); // turn LCD off              
                 //mySerialPort.Close();
 
+                mySerialPort.Write(array1, 0, 1); // clear the screen
                 foreach (string weatherData in weatherArgsArray)
-                {
-                    //mySerialPort.Write(array1, 0, 1); // clear the screen
+                {                    
                     mySerialPort.WriteLine(weatherData);
                 }
             }
