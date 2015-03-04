@@ -217,7 +217,6 @@ namespace LCDMadness
             string[] weatherArray = new string[] { clothingSuggest };
             writeToSerial(weatherArray);
         }
-
         private static string SuggestClothing(string todayForecastHiTempF, string clothingSuggest)
         {
             //convert to an int so I can perform logic operations
@@ -252,7 +251,6 @@ namespace LCDMadness
 
             return clothingSuggest;
         }
-
         private static void parseForecastLinq(string input_xml)             
         {
             //Variables
@@ -309,7 +307,6 @@ namespace LCDMadness
 
             return value;
         }
-        
         // write to the LCD screen using serial
         private static void writeToSerial(string [] weatherArgsArray)
         {
@@ -341,11 +338,27 @@ namespace LCDMadness
                 //mySerialPort.Write(array1, 3, 1); // turn LCD off              
                 //mySerialPort.Close();
 
+
+                // a while loop here to update the text continuously
+                //while (true)
+                //{
+                //    mySerialPort.Write(array1, 0, 1); // clear the screen
+                //    foreach (string weatherData in weatherArgsArray)
+                //    {
+                //        mySerialPort.Write(array1, 0, 1); // clear the screen
+                //        mySerialPort.WriteLine(weatherData);
+                //        System.Threading.Thread.Sleep(3000);//sleep for 3 seconds
+                //    }
+                //}
+
+                //original code here
                 mySerialPort.Write(array1, 0, 1); // clear the screen
                 foreach (string weatherData in weatherArgsArray)
-                {                    
-                    mySerialPort.WriteLine(weatherData);
+                {
+                    mySerialPort.Write(array1, 0, 1); // clear the screen
+                    mySerialPort.WriteLine(weatherData);                    
                 }
+
             }
             catch(Exception e)
             {
