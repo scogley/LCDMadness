@@ -167,7 +167,8 @@ namespace LCDMadness
             //Variables
             string fcttext = "";
             string todayForecastHiTempF = "";
-          
+            string clothingSuggest = "";
+
             var cli = new WebClient();
             string weather = cli.DownloadString(input_xml);
 
@@ -208,17 +209,18 @@ namespace LCDMadness
             //logic check on high temp
             //int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
             int intForecastHiF = 80;
-            if (intForecastHiF > 0 && < 44)
+            if (0 <= intForecastHiF && intForecastHiF <= 44)
             {
                 Console.WriteLine("wear a WARM coat!");
             }// end > 0
-            else if (intForecastHiF > 45)
+            else if (45 <= intForecastHiF && intForecastHiF <= 64)
             {
                 Console.WriteLine("wear a Light jacket!");
+                clothingSuggest = "wear a Light jacket!";
             }// end > 45
-            else if (intForecastHiF > 65)
+            else if (65 <= intForecastHiF && intForecastHiF <= 71)
             {                
-                Console.WriteLine("t-shirt only OK");
+                Console.WriteLine("t-shirt weather!");
             }// end >65
             else if (intForecastHiF > 72)
             {
@@ -229,9 +231,10 @@ namespace LCDMadness
             Console.WriteLine("********************");
             Console.WriteLine("fcttext:            " + fcttext);
             Console.WriteLine("high temp:          " + todayForecastHiTempF);
+            Console.WriteLine(clothingSuggest);
 
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] {fcttext, todayForecastHiTempF};
+            string[] weatherArray = new string[] {clothingSuggest};
             writeToSerial(weatherArray);
         }
 
@@ -297,7 +300,7 @@ namespace LCDMadness
         {
             try
             {
-                string serialPort = "COM4"; //com3 for home pc com4 for devbox
+                string serialPort = "COM3"; //com3 for home pc and laptop; com4 for devbox
                 SerialPort mySerialPort = new SerialPort(serialPort);
                 //SerialPort mySerialPort = new SerialPort("COM3");
 
