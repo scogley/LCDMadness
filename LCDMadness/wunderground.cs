@@ -179,54 +179,34 @@ namespace LCDMadness
                     switch (reader.NodeType)
                     {
                         case XmlNodeType.Element:
-                        {
-                            // I only want to set the value for fcttext to the first occurence (which is today's forecast).
-                            // Using IF to prevent updating this value again when looping and encountering element name fcttext again
-                            if (fcttext == "")
                             {
-                                if (reader.Name.Equals("fcttext"))
+                                // I only want to set the value for fcttext to the first occurence (which is today's forecast).
+                                // Using IF to prevent updating this value again when looping and encountering element name fcttext again
+                                if (fcttext == "")
                                 {
-                                    reader.Read();
-                                    fcttext = reader.Value;                                    
+                                    if (reader.Name.Equals("fcttext"))
+                                    {
+                                        reader.Read();
+                                        fcttext = reader.Value;
+                                    }
                                 }
-                            }
-                            // I only want to set the value for the first fahrenheight element (today's forecast).
-                            // Using IF to prevent updating this value again when looping and encountering element name fahrenheight again
-                            else if (todayForecastHiTempF == "")
-                            { 
-                                if (reader.Name.Equals("fahrenheit"))                            
+                                // I only want to set the value for the first fahrenheight element (today's forecast).
+                                // Using IF to prevent updating this value again when looping and encountering element name fahrenheight again
+                                else if (todayForecastHiTempF == "")
                                 {
-                                    reader.Read();
-                                    todayForecastHiTempF = reader.Value;                                                                
-                                } 
+                                    if (reader.Name.Equals("fahrenheit"))
+                                    {
+                                        reader.Read();
+                                        todayForecastHiTempF = reader.Value;
+                                    }
+                                }
+                                break;
                             }
-                            break;
-                        }
                     }
-                }                
+                }
             }
-
-            //logic check on high temp
-            //int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
-            int intForecastHiF = 80;
-            if (0 <= intForecastHiF && intForecastHiF <= 44)
-            {
-                Console.WriteLine("wear a WARM coat!");
-            }// end > 0
-            else if (45 <= intForecastHiF && intForecastHiF <= 64)
-            {
-                Console.WriteLine("wear a Light jacket!");
-                clothingSuggest = "wear a Light jacket!";
-            }// end > 45
-            else if (65 <= intForecastHiF && intForecastHiF <= 71)
-            {                
-                Console.WriteLine("t-shirt weather!");
-            }// end >65
-            else if (intForecastHiF > 72)
-            {
-                Console.WriteLine("wear some shorts!");
-            }// end >72
-
+            // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
+            clothingSuggest = SuggestClothing(todayForecastHiTempF, clothingSuggest);
 
             Console.WriteLine("********************");
             Console.WriteLine("fcttext:            " + fcttext);
@@ -234,8 +214,43 @@ namespace LCDMadness
             Console.WriteLine(clothingSuggest);
 
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] {clothingSuggest};
+            string[] weatherArray = new string[] { clothingSuggest };
             writeToSerial(weatherArray);
+        }
+
+        private static string SuggestClothing(string todayForecastHiTempF, string clothingSuggest)
+        {
+            //convert to an int so I can perform logic operations
+            int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
+            //int intForecastHiF = 80;
+            if (0 <= intForecastHiF && intForecastHiF <= 44)
+            {
+                clothingSuggest = "wear a WARM coat!";
+                Console.WriteLine(clothingSuggest);
+            }
+            else if (45 <= intForecastHiF && intForecastHiF <= 68)
+            {
+                clothingSuggest = "wear a Light jacket!";
+                Console.WriteLine(clothingSuggest);
+
+            }
+            else if (69 <= intForecastHiF && intForecastHiF <= 72)
+            {
+                clothingSuggest = "wear a long sleeve top";
+                Console.WriteLine(clothingSuggest);
+            }
+            else if (73 <= intForecastHiF && intForecastHiF >= 75)
+            {
+                clothingSuggest = "wear a T-shirt or light top";
+                Console.WriteLine(clothingSuggest);
+            }
+            else if (intForecastHiF > 76)
+            {
+                clothingSuggest = "shorts and flip flops!";
+                Console.WriteLine(clothingSuggest);
+            }
+
+            return clothingSuggest;
         }
 
         private static void parseForecastLinq(string input_xml)             
