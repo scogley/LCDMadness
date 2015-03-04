@@ -221,16 +221,16 @@ namespace LCDMadness
         private static string SuggestClothing(string todayForecastHiTempF, string clothingSuggest)
         {
             //convert to an int so I can perform logic operations
-            int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
-            //int intForecastHiF = 80;
-            if (0 <= intForecastHiF && intForecastHiF <= 44)
+            //int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
+            int intForecastHiF = 65;
+            if (0 <= intForecastHiF && intForecastHiF <= 50)
             {
-                clothingSuggest = "wear a WARM coat!";
+                clothingSuggest = "VERY warm coat and hat";
                 Console.WriteLine(clothingSuggest);
             }
-            else if (45 <= intForecastHiF && intForecastHiF <= 68)
+            else if (51 <= intForecastHiF && intForecastHiF <= 68)
             {
-                clothingSuggest = "wear a Light jacket!";
+                clothingSuggest = "wear a warm jacket";
                 Console.WriteLine(clothingSuggest);
 
             }
@@ -241,12 +241,12 @@ namespace LCDMadness
             }
             else if (73 <= intForecastHiF && intForecastHiF >= 75)
             {
-                clothingSuggest = "wear a T-shirt or light top";
+                clothingSuggest = "nice dress and sunglassses";
                 Console.WriteLine(clothingSuggest);
             }
             else if (intForecastHiF > 76)
             {
-                clothingSuggest = "shorts and flip flops!";
+                clothingSuggest = "sunglasses shorts flip flops";
                 Console.WriteLine(clothingSuggest);
             }
 
