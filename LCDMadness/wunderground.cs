@@ -205,6 +205,27 @@ namespace LCDMadness
                 }                
             }
 
+            //logic check on high temp
+            //int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
+            int intForecastHiF = 80;
+            if (intForecastHiF > 0 && < 44)
+            {
+                Console.WriteLine("wear a WARM coat!");
+            }// end > 0
+            else if (intForecastHiF > 45)
+            {
+                Console.WriteLine("wear a Light jacket!");
+            }// end > 45
+            else if (intForecastHiF > 65)
+            {                
+                Console.WriteLine("t-shirt only OK");
+            }// end >65
+            else if (intForecastHiF > 72)
+            {
+                Console.WriteLine("wear some shorts!");
+            }// end >72
+
+
             Console.WriteLine("********************");
             Console.WriteLine("fcttext:            " + fcttext);
             Console.WriteLine("high temp:          " + todayForecastHiTempF);
