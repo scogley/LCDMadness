@@ -41,6 +41,7 @@ namespace LCDMadness
             string fcttext = "";
             string todayForecastHiTempF = "";
             string clothingSuggest = "";
+            string icon = "";
 
             var cli = new WebClient();
             string weather = cli.DownloadString(input_xml);
@@ -73,13 +74,22 @@ namespace LCDMadness
                                         todayForecastHiTempF = reader.Value;
                                     }
                                 }
+                                else if (icon == "")
+                                {
+                                    if(reader.Name.Equals("icon"))
+                                    {
+                                        reader.Read();
+                                        icon = reader.Value;
+                                    }
+
+                                }
                                 break;
                             }
                     }
                 }
             }
             // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
-            clothingSuggest = SuggestClothing(todayForecastHiTempF, clothingSuggest);
+            clothingSuggest = SuggestClothing(todayForecastHiTempF, icon, clothingSuggest);
 
             Console.WriteLine("********************");
             Console.WriteLine("fcttext:            " + fcttext);
@@ -216,8 +226,10 @@ namespace LCDMadness
             string[] weatherArray = new string[] { temperature_string, "^", feelslike };
             writeToSerial(weatherArray);
         }        
-        private static string SuggestClothing(string todayForecastHiTempF, string clothingSuggest)
+        private static string SuggestClothing(string todayForecastHiTempF, string icon, string clothingSuggest)
         {
+            //TODO Write a switch to key off of the icon text value. inside the switch write IF blocks specific to that condition
+            
             //convert to an int so I can perform logic operations
             int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
             //int intForecastHiF = 65;
