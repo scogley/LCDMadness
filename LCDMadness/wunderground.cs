@@ -228,38 +228,91 @@ namespace LCDMadness
         }        
         private static string SuggestClothing(string todayForecastHiTempF, string icon, string clothingSuggest)
         {
-            //TODO Write a switch to key off of the icon text value. inside the switch write IF blocks specific to that condition
-            
             //convert to an int so I can perform logic operations
             int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
             //int intForecastHiF = 65;
-            if (0 <= intForecastHiF && intForecastHiF <= 50)
+            
+            //TODO Write a switch to key off of the icon text value. The icon text value is simple string of the forecast conditions for the day.
+            // example values:  "partlycloudy" or "sunny" or "rainy". This is preferred over parsing from fcctext string
+            // icon info is here: http://www.wunderground.com/weather/api/d/docs?d=resources/icon-sets
+            switch (icon)
             {
-                clothingSuggest = "VERY warm coat and hat";
-                Console.WriteLine(clothingSuggest);
-            }
-            else if (51 <= intForecastHiF && intForecastHiF <= 68)
-            {
-                clothingSuggest = "wear a warm jacket";
-                Console.WriteLine(clothingSuggest);
+                case "partlycloudy":
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket";
+                            Console.WriteLine(clothingSuggest);
 
-            }
-            else if (69 <= intForecastHiF && intForecastHiF <= 72)
-            {
-                clothingSuggest = "wear a long sleeve top";
-                Console.WriteLine(clothingSuggest);
-            }
-            else if (73 <= intForecastHiF && intForecastHiF >= 75)
-            {
-                clothingSuggest = "nice dress and sunglassses";
-                Console.WriteLine(clothingSuggest);
-            }
-            else if (intForecastHiF > 76)
-            {
-                clothingSuggest = "sunglasses shorts flip flops";
-                Console.WriteLine(clothingSuggest);
-            }
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress and sunglassses";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses shorts flip flops";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        break;
+                    }
+                case "sunny":
+                    { 
+                        
+                    }
+                    break;
+                case "rainy":
+                    { 
+                        
+                    }
+                    break;
+                case "foo":
+                    { }
+                    break;
+                
+                default:
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket";
+                            Console.WriteLine(clothingSuggest);
 
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress and sunglassses";
+                            Console.WriteLine(clothingSuggest);
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses shorts flip flops";
+                            Console.WriteLine(clothingSuggest);
+                        }
+
+                    }
+                    break;
+            }
             return clothingSuggest;
         }
         private static void writeToSerial(string[] weatherArgsArray)

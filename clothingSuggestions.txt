@@ -1,0 +1,31 @@
+So, I think the app is not to help you choose your outfit, but to help you compliment your outfit according to weather conditions before you leave the house. This is all for your comfort!
+ 
+When it's cold:
+ 
+Boots
+Thick socks
+Warm coat
+Thermal
+Scarf
+Hat
+Gloves
+Ear covers
+Light jacket
+Sweater
+ 
+When it's raining:
+ 
+Umbrella
+Rain boots
+Rain jacket
+Waterproof coat
+ 
+When it's warm:
+ 
+Dress
+Shorts
+Bikini
+Sandals
+Sunglasses
+Summer hat
+Light tops
