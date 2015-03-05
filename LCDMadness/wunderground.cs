@@ -33,8 +33,63 @@ namespace LCDMadness
         // info on parsing XML is here: https://msdn.microsoft.com/en-us/library/system.xml.xmlreader.read(v=vs.110).aspx
         // info on parsing XML with elements of the same name: http://stackoverflow.com/questions/13642633/using-xmlreader-class-to-parse-xml-with-elements-of-the-same-name
         // tips on using Linq and XElement are here: http://www.dotnetperls.com/xelement
-        
 
+        // parse Forecast
+        private static void parseForecast(string input_xml)
+        {
+            //Variables
+            string fcttext = "";
+            string todayForecastHiTempF = "";
+            string clothingSuggest = "";
+
+            var cli = new WebClient();
+            string weather = cli.DownloadString(input_xml);
+
+            using (XmlReader reader = XmlReader.Create(new StringReader(weather)))
+            {
+                while (reader.Read())
+                {
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            {
+                                // I only want to set the value for fcttext to the first occurence (which is today's forecast).
+                                // Using IF to prevent updating this value again when looping and encountering element name fcttext again
+                                if (fcttext == "")
+                                {
+                                    if (reader.Name.Equals("fcttext"))
+                                    {
+                                        reader.Read();
+                                        fcttext = reader.Value;
+                                    }
+                                }
+                                // I only want to set the value for the first fahrenheight element (today's forecast).
+                                // Using IF to prevent updating this value again when looping and encountering element name fahrenheight again
+                                else if (todayForecastHiTempF == "")
+                                {
+                                    if (reader.Name.Equals("fahrenheit"))
+                                    {
+                                        reader.Read();
+                                        todayForecastHiTempF = reader.Value;
+                                    }
+                                }
+                                break;
+                            }
+                    }
+                }
+            }
+            // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
+            clothingSuggest = SuggestClothing(todayForecastHiTempF, clothingSuggest);
+
+            Console.WriteLine("********************");
+            Console.WriteLine("fcttext:            " + fcttext);
+            Console.WriteLine("high temp:          " + todayForecastHiTempF);
+            Console.WriteLine(clothingSuggest);
+
+            // now write to the LCD over the serial port
+            string[] weatherArray = new string[] { clothingSuggest };
+            writeToSerial(weatherArray);
+        }
         // parse Conditions
         private static void parseConditions(string input_xml)
         {
@@ -127,7 +182,7 @@ namespace LCDMadness
                             else if (reader.Name.Equals("temp_f"))
                             {
                                 reader.Read();
-                                temp_f = reader.Value;                                
+                                temp_f = reader.Value;
                             }
                             break;
                     }
@@ -147,8 +202,8 @@ namespace LCDMadness
             Console.WriteLine("Location:          " + longitude + ", " + latitude);
             Console.WriteLine("FeelsLike:)        " + feelslike);
             Console.WriteLine("TempF:)            " + temp_f);
-            
-            
+
+
             // logic for temperature
             //int intTemp_f = Convert.ToInt32(temp_f);
 
@@ -158,70 +213,14 @@ namespace LCDMadness
             //}
 
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] {temperature_string,"^",feelslike};
+            string[] weatherArray = new string[] { temperature_string, "^", feelslike };
             writeToSerial(weatherArray);
-        }
-        // parse Forecast
-        private static void parseForecast(string input_xml)
-        {
-            //Variables
-            string fcttext = "";
-            string todayForecastHiTempF = "";
-            string clothingSuggest = "";
-
-            var cli = new WebClient();
-            string weather = cli.DownloadString(input_xml);
-
-            using (XmlReader reader = XmlReader.Create(new StringReader(weather)))
-            {
-                while (reader.Read())
-                {
-                    switch (reader.NodeType)
-                    {
-                        case XmlNodeType.Element:
-                            {
-                                // I only want to set the value for fcttext to the first occurence (which is today's forecast).
-                                // Using IF to prevent updating this value again when looping and encountering element name fcttext again
-                                if (fcttext == "")
-                                {
-                                    if (reader.Name.Equals("fcttext"))
-                                    {
-                                        reader.Read();
-                                        fcttext = reader.Value;
-                                    }
-                                }
-                                // I only want to set the value for the first fahrenheight element (today's forecast).
-                                // Using IF to prevent updating this value again when looping and encountering element name fahrenheight again
-                                else if (todayForecastHiTempF == "")
-                                {
-                                    if (reader.Name.Equals("fahrenheit"))
-                                    {
-                                        reader.Read();
-                                        todayForecastHiTempF = reader.Value;
-                                    }
-                                }
-                                break;
-                            }
-                    }
-                }
-            }
-            // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
-            clothingSuggest = SuggestClothing(todayForecastHiTempF, clothingSuggest);
-
-            Console.WriteLine("********************");
-            Console.WriteLine("fcttext:            " + fcttext);
-            Console.WriteLine("high temp:          " + todayForecastHiTempF);
-            Console.WriteLine(clothingSuggest);
-
-            // now write to the LCD over the serial port
-            string[] weatherArray = new string[] { clothingSuggest };
-            writeToSerial(weatherArray);
-        }
+        }        
         private static string SuggestClothing(string todayForecastHiTempF, string clothingSuggest)
         {
             //convert to an int so I can perform logic operations
-            //int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
-            int intForecastHiF = 65;
+            int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
+            //int intForecastHiF = 65;
             if (0 <= intForecastHiF && intForecastHiF <= 50)
             {
                 clothingSuggest = "VERY warm coat and hat";
@@ -251,6 +250,67 @@ namespace LCDMadness
 
             return clothingSuggest;
         }
+        private static void writeToSerial(string[] weatherArgsArray)
+        {
+            try
+            {
+                string serialPort = "COM4"; //com3 for home pc and laptop; com4 for devbox
+                SerialPort mySerialPort = new SerialPort(serialPort);
+                //SerialPort mySerialPort = new SerialPort("COM3");
+
+                mySerialPort.BaudRate = 9600;
+                mySerialPort.Parity = Parity.None;
+                mySerialPort.StopBits = StopBits.One;
+                mySerialPort.DataBits = 8;
+                mySerialPort.Handshake = Handshake.None;
+                mySerialPort.Open();
+
+                //create a new char array to store the various commands we want to send
+                //this char value will be converted to a dec value by the arduino code SerialTalkLCD
+
+
+                char[] array1 = { '^', '~', '@', 'E', '>' };
+
+                //mySerialPort.Write(array1, 1, 1); // turn LCD on
+                //mySerialPort.Write(array1, 0, 1); // clear the screen
+                //string timeNow = System.DateTime.Now.ToShortTimeString();
+                ////mySerialPort.WriteLine("hello world!");
+                //mySerialPort.Write(array1, 4, 1); // form feed
+                //mySerialPort.WriteLine(timeNow);
+                //mySerialPort.Write(array1, 3, 1); // turn LCD off              
+
+
+                // a while loop here to update the text continuously
+                //while (true)
+                //{
+                //    mySerialPort.Write(array1, 0, 1); // clear the screen
+                //    foreach (string weatherData in weatherArgsArray)
+                //    {
+                //        mySerialPort.Write(array1, 0, 1); // clear the screen
+                //        mySerialPort.WriteLine(weatherData);
+                //        System.Threading.Thread.Sleep(3000);//sleep for 3 seconds
+                //    }
+                //}
+
+
+
+                //original code here
+                mySerialPort.Write(array1, 0, 1); // clear the screen
+                foreach (string weatherData in weatherArgsArray)
+                {
+                    mySerialPort.Write(array1, 0, 1); // clear the screen
+                    mySerialPort.WriteLine(weatherData);
+                }                
+                
+                mySerialPort.Close();
+            }
+            catch (Exception e)
+            {
+                //TODO: SOME ERROR HANDLING HERE
+                Console.WriteLine(e.ToString());
+            }
+        }               
+        
         private static void parseForecastLinq(string input_xml)             
         {
             //Variables
@@ -307,64 +367,6 @@ namespace LCDMadness
 
             return value;
         }
-        // write to the LCD screen using serial
-        private static void writeToSerial(string [] weatherArgsArray)
-        {
-            try
-            {
-                string serialPort = "COM3"; //com3 for home pc and laptop; com4 for devbox
-                SerialPort mySerialPort = new SerialPort(serialPort);
-                //SerialPort mySerialPort = new SerialPort("COM3");
-
-                mySerialPort.BaudRate = 9600;
-                mySerialPort.Parity = Parity.None;
-                mySerialPort.StopBits = StopBits.One;
-                mySerialPort.DataBits = 8;
-                mySerialPort.Handshake = Handshake.None;
-                mySerialPort.Open();
-
-                //create a new char array to store the various commands we want to send
-                //this char value will be converted to a dec value by the arduino code SerialTalkLCD
-
-
-                char[] array1 = { '^', '~', '@', 'E', '>' };
-
-                //mySerialPort.Write(array1, 1, 1); // turn LCD on
-                //mySerialPort.Write(array1, 0, 1); // clear the screen
-                //string timeNow = System.DateTime.Now.ToShortTimeString();
-                ////mySerialPort.WriteLine("hello world!");
-                //mySerialPort.Write(array1, 4, 1); // form feed
-                //mySerialPort.WriteLine(timeNow);
-                //mySerialPort.Write(array1, 3, 1); // turn LCD off              
-                //mySerialPort.Close();
-
-
-                // a while loop here to update the text continuously
-                //while (true)
-                //{
-                //    mySerialPort.Write(array1, 0, 1); // clear the screen
-                //    foreach (string weatherData in weatherArgsArray)
-                //    {
-                //        mySerialPort.Write(array1, 0, 1); // clear the screen
-                //        mySerialPort.WriteLine(weatherData);
-                //        System.Threading.Thread.Sleep(3000);//sleep for 3 seconds
-                //    }
-                //}
-
-                //original code here
-                mySerialPort.Write(array1, 0, 1); // clear the screen
-                foreach (string weatherData in weatherArgsArray)
-                {
-                    mySerialPort.Write(array1, 0, 1); // clear the screen
-                    mySerialPort.WriteLine(weatherData);                    
-                }
-
-            }
-            catch(Exception e)
-            {
-                //TODO: SOME ERROR HANDLING HERE
-                Console.WriteLine(e.ToString());
-            }
-        }
+      
     }
 }
