@@ -247,14 +247,14 @@ namespace LCDMadness
                 #region case "chancerain":
                 case "chancerain":
                     {
-                        return clothingSuggest;
+                        
                     }
                     break;
                 #endregion
                 #region case "chancesleet":
                 case "chancesleet":
                     {
-                        return clothingSuggest;
+                        
                     }
                     break;
                 #endregion
@@ -308,34 +308,23 @@ namespace LCDMadness
                     {
                         if (0 <= intForecastHiF && intForecastHiF <= 50)
                         {
-                            clothingSuggest = "VERY warm coat and hat";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "VERY warm coat and hat";                            
                         }
                         else if (51 <= intForecastHiF && intForecastHiF <= 68)
                         {
                             clothingSuggest = "wear a warm jacket";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
-
                         }
                         else if (69 <= intForecastHiF && intForecastHiF <= 72)
                         {
-                            clothingSuggest = "wear a long sleeve top";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "wear a long sleeve top";                            
                         }
                         else if (73 <= intForecastHiF && intForecastHiF >= 75)
                         {
-                            clothingSuggest = "nice dress and sunglassses";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "nice dress and sunglassses";                            
                         }
                         else if (intForecastHiF > 76)
                         {
-                            clothingSuggest = "sunglasses shorts flip flops";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "sunglasses shorts flip flops";                            
                         }
                         break;
                     }
@@ -355,34 +344,23 @@ namespace LCDMadness
                     {
                         if (0 <= intForecastHiF && intForecastHiF <= 50)
                         {
-                            clothingSuggest = "WARM rain coat,boots,umbrella";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "WARM rain coat,boots,umbrella";                            
                         }
                         else if (51 <= intForecastHiF && intForecastHiF <= 68)
                         {
-                            clothingSuggest = "Regular rain jacket,boots,umbrella";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
-
+                            clothingSuggest = "Regular rain jacket,boots,umbrella";                            
                         }
                         else if (69 <= intForecastHiF && intForecastHiF <= 72)
                         {
-                            clothingSuggest = "Light rain jacket, boots umbrella";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "Light rain jacket, boots umbrella";                            
                         }
                         else if (73 <= intForecastHiF && intForecastHiF >= 75)
                         {
-                            clothingSuggest = "Light rain jacket, regular shoes, umbrella";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "Light rain jacket, regular shoes, umbrella";                            
                         }
                         else if (intForecastHiF > 76)
                         {
-                            clothingSuggest = "light rain jacket, shorts or skirt OK, umbrella";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "light rain jacket, shorts or skirt OK, umbrella";                            
                         }
                     }
                     break;
@@ -398,33 +376,22 @@ namespace LCDMadness
                         if (0 <= intForecastHiF && intForecastHiF <= 50)
                         {
                             clothingSuggest = "VERY warm coat, hat, sunglasses";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
                         }
                         else if (51 <= intForecastHiF && intForecastHiF <= 68)
                         {
                             clothingSuggest = "Regular jacket and sunglasses";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
-
                         }
                         else if (69 <= intForecastHiF && intForecastHiF <= 72)
                         {
                             clothingSuggest = "Light jacket and sunglasses";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
                         }
                         else if (73 <= intForecastHiF && intForecastHiF >= 75)
                         {
-                            clothingSuggest = "Dress, Shirt, Shorts, sunglasses";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "Dress, Shirt, Shorts, sunglasses";                            
                         }
                         else if (intForecastHiF > 76)
                         {
-                            clothingSuggest = "sunglasses shorts flip flops";
-                            Console.WriteLine(clothingSuggest);
-                            return clothingSuggest;
+                            clothingSuggest = "sunglasses shorts flip flops";                            
                         }
                     }
                     break;
@@ -475,6 +442,8 @@ namespace LCDMadness
 
                     
             }
+            Console.WriteLine(clothingSuggest);
+            return clothingSuggest;
         }
         private static void writeToSerial(string[] weatherArgsArray)
         {
