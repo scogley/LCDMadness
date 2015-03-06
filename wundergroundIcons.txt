@@ -1,0 +1,26 @@
+<img src="http://icons.wxug.com/i/c/a/chanceflurries.gif" alt="http://icons.wxug.com/i/c/a/chanceflurries.gif" />
+	<img src="http://icons.wxug.com/i/c/a/chancerain.gif" alt="http://icons.wxug.com/i/c/a/chancerain.gif" />
+	<img src="http://icons.wxug.com/i/c/a/chancesleet.gif" alt="http://icons.wxug.com/i/c/a/chancesleet.gif" />
+	<img src="http://icons.wxug.com/i/c/a/chancesleet.gif" alt="http://icons.wxug.com/i/c/a/chancesleet.gif" />
+	<img src="http://icons.wxug.com/i/c/a/chancesnow.gif" alt="http://icons.wxug.com/i/c/a/chancesnow.gif" />
+	<img src="http://icons.wxug.com/i/c/a/chancetstorms.gif" alt="http://icons.wxug.com/i/c/a/chancetstorms.gif" />
+	<img src="http://icons.wxug.com/i/c/a/chancetstorms.gif" alt="http://icons.wxug.com/i/c/a/chancetstorms.gif" />
+	<img src="http://icons.wxug.com/i/c/a/clear.gif" alt="http://icons.wxug.com/i/c/a/clear.gif" />
+	<img src="http://icons.wxug.com/i/c/a/cloudy.gif" alt="http://icons.wxug.com/i/c/a/clear.gif" />
+	<img src="http://icons.wxug.com/i/c/a/flurries.gif" alt="http://icons.wxug.com/i/c/a/flurries.gif" />
+	<img src="http://icons.wxug.com/i/c/a/fog.gif" alt="http://icons.wxug.com/i/c/a/fog.gif" />
+	<img src="http://icons.wxug.com/i/c/a/hazy.gif" alt="http://icons.wxug.com/i/c/a/hazy.gif" />
+	<img src="http://icons.wxug.com/i/c/a/mostlycloudy.gif" alt="http://icons.wxug.com/i/c/a/mostlycloudy.gif" />
+	<img src="http://icons.wxug.com/i/c/a/mostlysunny.gif" alt="http://icons.wxug.com/i/c/a/mostlysunny.gif" />
+	<img src="http://icons.wxug.com/i/c/a/partlycloudy.gif" alt="http://icons.wxug.com/i/c/a/partlycloudy.gif" />
+	<img src="http://icons.wxug.com/i/c/a/partlysunny.gif" alt="http://icons.wxug.com/i/c/a/partlysunny.gif" />
+	<img src="http://icons.wxug.com/i/c/a/sleet.gif" alt="http://icons.wxug.com/i/c/a/sleet.gif" />
+	<img src="http://icons.wxug.com/i/c/a/rain.gif" alt="http://icons.wxug.com/i/c/a/rain.gif" />
+	<img src="http://icons.wxug.com/i/c/a/sleet.gif" alt="http://icons.wxug.com/i/c/a/sleet.gif" />
+	<img src="http://icons.wxug.com/i/c/a/snow.gif" alt="http://icons.wxug.com/i/c/a/snow.gif" />
+	<img src="http://icons.wxug.com/i/c/a/sunny.gif" alt="http://icons.wxug.com/i/c/a/sunny.gif" />
+	<img src="http://icons.wxug.com/i/c/a/tstorms.gif" alt="http://icons.wxug.com/i/c/a/tstorms.gif" />
+	<img src="http://icons.wxug.com/i/c/a/tstorms.gif" alt="http://icons.wxug.com/i/c/a/tstorms.gif" />
+	<img src="http://icons.wxug.com/i/c/a/tstorms.gif" alt="http://icons.wxug.com/i/c/a/tstorms.gif" />
+	<img src="http://icons.wxug.com/i/c/a/cloudy.gif" alt="http://icons.wxug.com/i/c/a/cloudy.gif" />
+	<img src="http://icons.wxug.com/i/c/a/partlycloudy.gif" alt="http://icons.wxug.com/i/c/a/partlycloudy.gif" />
