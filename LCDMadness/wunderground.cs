@@ -97,10 +97,10 @@ namespace LCDMadness
             Console.WriteLine(clothingSuggest);
 
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] { clothingSuggest };
+            string[] weatherArray = new string[] { clothingSuggest , icon, todayForecastHiTempF};
             writeToSerial(weatherArray);
-        }
-        // parse Conditions
+        }// end parse forecast
+        
         private static void parseConditions(string input_xml)
         {
             //Variables
@@ -240,14 +240,41 @@ namespace LCDMadness
                 #region case "chanceflurries":
                 case "chanceflurries":
                     {
-                        return clothingSuggest;
-                    }
-                    break;
+                        if (0 <= intForecastHiF && intForecastHiF <= 40)
+                        {
+                            clothingSuggest = "VERY warm water proof coat and hat for snow";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "warm jacket for snow";
+                        }                       
+                        break;
+                    }                    
                 #endregion
                 #region case "chancerain":
                 case "chancerain":
                     {
-                        
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm waterproof jacket for rain";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "light waterproof jacket for rain";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "light waterproof jacket or umbrella";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "very light waterproof jacket or umbrella";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "very light waterproof but cool jacket or umbrella";
+                        }
+                        break;
                     }
                     break;
                 #endregion
@@ -270,8 +297,29 @@ namespace LCDMadness
                 #endregion
                 #region case "clear":
                 case "clear":
-                    { }
-                    break;
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat and sunglasses";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket and sunglasses";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top and sunglasses";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress and sunglassses";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses shorts flip flops";
+                        }
+                        break;
+                    }                    
                 #endregion
                 #region case "cloudy":
                 case "cloudy":
@@ -308,19 +356,19 @@ namespace LCDMadness
                     {
                         if (0 <= intForecastHiF && intForecastHiF <= 50)
                         {
-                            clothingSuggest = "VERY warm coat and hat";                            
+                            clothingSuggest = "VERY warm coat and hat, no rain";                            
                         }
                         else if (51 <= intForecastHiF && intForecastHiF <= 68)
                         {
-                            clothingSuggest = "wear a warm jacket";
+                            clothingSuggest = "wear a warm jacket, no rain";
                         }
                         else if (69 <= intForecastHiF && intForecastHiF <= 72)
                         {
-                            clothingSuggest = "wear a long sleeve top";                            
+                            clothingSuggest = "wear a long sleeve top, no rain";                            
                         }
                         else if (73 <= intForecastHiF && intForecastHiF >= 75)
                         {
-                            clothingSuggest = "nice dress and sunglassses";                            
+                            clothingSuggest = "nice dress and sunglassses, no rain";                            
                         }
                         else if (intForecastHiF > 76)
                         {
@@ -348,27 +396,37 @@ namespace LCDMadness
                         }
                         else if (51 <= intForecastHiF && intForecastHiF <= 68)
                         {
-                            clothingSuggest = "Regular rain jacket,boots,umbrella";                            
+                            clothingSuggest = "Light rain jacket,boots,umbrella";                            
                         }
                         else if (69 <= intForecastHiF && intForecastHiF <= 72)
                         {
-                            clothingSuggest = "Light rain jacket, boots umbrella";                            
+                            clothingSuggest = "Light and cool rain jacket, boots umbrella";                            
                         }
                         else if (73 <= intForecastHiF && intForecastHiF >= 75)
                         {
-                            clothingSuggest = "Light rain jacket, regular shoes, umbrella";                            
+                            clothingSuggest = "Very light and cool rain jacket, boots umbrella";                            
                         }
                         else if (intForecastHiF > 76)
                         {
-                            clothingSuggest = "light rain jacket, shorts or skirt OK, umbrella";                            
+                            clothingSuggest = "light rain jacket for warm weather, shorts or skirt OK, umbrella";                            
                         }
                     }
                     break;
                 #endregion
                 #region case "snow":
                 case "snow":
-                    { }
-                    break;
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 40)
+                        {
+                            clothingSuggest = "VERY warm water proof coat and hat for snow";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "light jacket and hat for snow";
+                        }
+                        break;
+                    }
+                    
                 #endregion
                 #region case "sunny":
                 case "sunny":
@@ -462,42 +520,27 @@ namespace LCDMadness
 
                 //create a new char array to store the various commands we want to send
                 //this char value will be converted to a dec value by the arduino code SerialTalkLCD
-
-
                 char[] array1 = { '^', '~', '@', 'E', '>' };
 
-                //mySerialPort.Write(array1, 1, 1); // turn LCD on
-                //mySerialPort.Write(array1, 0, 1); // clear the screen
-                //string timeNow = System.DateTime.Now.ToShortTimeString();
-                ////mySerialPort.WriteLine("hello world!");
-                //mySerialPort.Write(array1, 4, 1); // form feed
-                //mySerialPort.WriteLine(timeNow);
-                //mySerialPort.Write(array1, 3, 1); // turn LCD off              
-
-
-                // a while loop here to update the text continuously
-                //while (true)
-                //{
-                //    mySerialPort.Write(array1, 0, 1); // clear the screen
-                //    foreach (string weatherData in weatherArgsArray)
-                //    {
-                //        mySerialPort.Write(array1, 0, 1); // clear the screen
-                //        mySerialPort.WriteLine(weatherData);
-                //        System.Threading.Thread.Sleep(3000);//sleep for 3 seconds
-                //    }
-                //}
-
-
-
-                //original code here
-                mySerialPort.Write(array1, 0, 1); // clear the screen
-                foreach (string weatherData in weatherArgsArray)
+                    //mySerialPort.Write(array1, 1, 1); // turn LCD on
+                    //mySerialPort.Write(array1, 0, 1); // clear the screen                                
+                    //mySerialPort.Write(array1, 4, 1); // form feed                
+                    //mySerialPort.Write(array1, 3, 1); // turn LCD off              
+                                
+                mySerialPort.Write(array1, 0, 1); // clear the screen                
+                // loop endlessly updating screen with the clothing suggestion, conditions, high temp
+                while (true)
                 {
-                    mySerialPort.Write(array1, 0, 1); // clear the screen
-                    mySerialPort.WriteLine(weatherData);
-                }                
-                
+                    foreach (string weatherData in weatherArgsArray)
+                    {
+                        mySerialPort.Write(array1, 0, 1); // clear the screen
+                        mySerialPort.WriteLine(weatherData);
+                        mySerialPort.Write(array1, 4, 1);  // form feed
+                        System.Threading.Thread.Sleep(3000);
+                    }
+                }
                 mySerialPort.Close();
+                
             }
             catch (Exception e)
             {
