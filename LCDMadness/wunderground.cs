@@ -89,6 +89,8 @@ namespace LCDMadness
                 }
             }
             // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
+            //todayForecastHiTempF = "81";
+            //icon = "sunny";
             clothingSuggest = SuggestClothing(todayForecastHiTempF, icon, clothingSuggest);
 
             Console.WriteLine("********************");
@@ -229,8 +231,9 @@ namespace LCDMadness
         private static string SuggestClothing(string todayForecastHiTempF, string icon, string clothingSuggest)
         {
             //convert to an int so I can perform logic operations
+            
             int intForecastHiF = Convert.ToInt32(todayForecastHiTempF);
-            //int intForecastHiF = 65;
+            
 
             //TODO Write a switch to key off of the icon text value. The icon text value is simple string of the forecast conditions for the day.
             // example values:  "partlycloudy" or "sunny" or "rainy". This is preferred over parsing from fcctext string
