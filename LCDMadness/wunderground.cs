@@ -18,17 +18,25 @@ namespace LCDMadness
         //Takes a url request to wunderground, parses it, and displays the data.
         public static void GetWeather()
         {
-            //Start wunderground API request
-            Console.WriteLine("Starting C# Weather Undeground Web API Test...");
-            string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
+            try {
+                //Start wunderground API request
+                Console.WriteLine("Starting C# Weather Undeground Web API Test...");
+                string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
-            //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
-            parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
-            //parseForecastLinq("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+                //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
+                parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+                //parseForecastLinq("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+
+                // End.
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.ReadLine();
+            }
             
-            // End.
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadKey();
         }
         // info on parsing XML is here: https://msdn.microsoft.com/en-us/library/system.xml.xmlreader.read(v=vs.110).aspx
         // info on parsing XML with elements of the same name: http://stackoverflow.com/questions/13642633/using-xmlreader-class-to-parse-xml-with-elements-of-the-same-name
@@ -510,7 +518,7 @@ namespace LCDMadness
         {
             try
             {
-                string serialPort = "COM4"; //com3 for home pc and laptop; com4 for devbox
+                string serialPort = "COM3"; //com3 for home pc and laptop; com4 for devbox
                 SerialPort mySerialPort = new SerialPort(serialPort);
                 //SerialPort mySerialPort = new SerialPort("COM3");
 
