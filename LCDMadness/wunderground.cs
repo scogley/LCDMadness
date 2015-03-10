@@ -104,6 +104,7 @@ namespace LCDMadness
             Console.WriteLine("********************");
             Console.WriteLine("fcttext:            " + fcttext);
             Console.WriteLine("high temp:          " + todayForecastHiTempF);
+            Console.WriteLine("icon text:          " + icon);
             Console.WriteLine(clothingSuggest);
 
             // now write to the LCD over the serial port
@@ -292,18 +293,55 @@ namespace LCDMadness
                 #region case "chancesleet":
                 case "chancesleet":
                     {
-                        
-                    }
-                    break;
+                        if (0 <= intForecastHiF && intForecastHiF <= 40)
+                        {
+                            clothingSuggest = "VERY warm water proof coat and hat for sleet";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "light water proof jacket and hat for sleet";
+                        }
+                        break;
+                    }                    
                 #endregion
                 #region case "chancesnow":
                 case "chancesnow":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 40)
+                        {
+                            clothingSuggest = "VERY warm water proof coat and hat for snow";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "light jacket and hat for snow";
+                        }                        
+                    }
                     break;
                 #endregion
                 #region case "chancetstorms":
                 case "chancetstorms":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "WARM rain coat,boots";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "Light rain jacket,boots";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "Light and cool rain jacket";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "Very light and cool rain jacket";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "light rain jacket for warm weather, shorts or skirt OK";
+                        }
+                    }
                     break;
                 #endregion
                 #region case "clear":
@@ -334,32 +372,146 @@ namespace LCDMadness
                 #endregion
                 #region case "cloudy":
                 case "cloudy":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat, no rain";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket, no rain";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top, no rain";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress or skirt no rain";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses for cloudy day, shorts flip flops";
+                        }                        
+                    }
                     break;
                 #endregion
                 #region case "flurries":
                 case "flurries":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 40)
+                        {
+                            clothingSuggest = "VERY warm water proof coat and hat for snow";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "light jacket and hat for snow";
+                        }
+                    }
                     break;
                 #endregion
                 #region case "fog":
                 case "fog":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat, no rain";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket, no rain";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top, no rain";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress or skirt no rain";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses for cloudy day, shorts flip flops";
+                        }                        
+                    }
                     break;
                 #endregion
                 #region case "hazy":
                 case "hazy":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat, no rain";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket, no rain";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top, no rain";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress or skirt no rain";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses for cloudy day, shorts flip flops";
+                        }                        
+                    }
                     break;
                 #endregion
                 #region case "mostlycloudy":
                 case "mostlycloudy":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat and hat, no rain";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "wear a warm jacket, no rain";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "wear a long sleeve top, no rain";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "nice dress or skirt no rain";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses for cloudy day, shorts flip flops";
+                        }                        
+                    }
                     break;
                 #endregion
                 #region case "mostlysunny":
                 case "mostlysunny":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat, hat, sunglasses";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "Regular jacket and sunglasses";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "Light jacket and sunglasses";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "Dress, Shirt, Shorts, sunglasses";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses shorts flip flops";
+                        }
+                    }
                     break;
                 #endregion
                 #region case "partlycloudy":
@@ -390,13 +542,43 @@ namespace LCDMadness
                 #endregion
                 #region case "partlysunny":
                 case "partlysunny":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "VERY warm coat, hat, sunglasses";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "Regular jacket and sunglasses";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "Light jacket and sunglasses";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "Dress, Shirt, Shorts, sunglasses";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "sunglasses shorts flip flops";
+                        }
+                    }
                     break;
                 #endregion
                 #region case "sleet":
                 case "sleet":
-                    { }
-                    break;
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 40)
+                        {
+                            clothingSuggest = "VERY warm water proof coat and hat for sleet";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "light jacket and hat for sleet";
+                        }
+                        break;
+                    }                    
                 #endregion
                 #region case "rain":
                 case "rain":
@@ -467,7 +649,28 @@ namespace LCDMadness
                 #endregion
                 #region case "tstorms":
                 case "tstorms":
-                    { }
+                    {
+                        if (0 <= intForecastHiF && intForecastHiF <= 50)
+                        {
+                            clothingSuggest = "WARM rain coat,boots";
+                        }
+                        else if (51 <= intForecastHiF && intForecastHiF <= 68)
+                        {
+                            clothingSuggest = "Light rain jacket,boots";
+                        }
+                        else if (69 <= intForecastHiF && intForecastHiF <= 72)
+                        {
+                            clothingSuggest = "Light and cool rain jacket, boots";
+                        }
+                        else if (73 <= intForecastHiF && intForecastHiF >= 75)
+                        {
+                            clothingSuggest = "Very light and cool rain jacket, boots";
+                        }
+                        else if (intForecastHiF > 76)
+                        {
+                            clothingSuggest = "light rain jacket for warm weather, shorts or skirt OK";
+                        }
+                    }
                     break;
                 #endregion
                 #region default:
@@ -558,8 +761,7 @@ namespace LCDMadness
                 //TODO: SOME ERROR HANDLING HERE
                 Console.WriteLine(e.ToString());
             }
-        }               
-        
+        }                       
         private static void parseForecastLinq(string input_xml)             
         {
             //Variables
