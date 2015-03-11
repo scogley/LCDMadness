@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.IO;
 using System.IO.Ports;
+using Twilio;
 
 
 
@@ -109,9 +110,10 @@ namespace LCDMadness
 
             // now write to the LCD over the serial port
             string[] weatherArray = new string[] { clothingSuggest , icon, todayForecastHiTempF};
-            writeToSerial(weatherArray);
+            //writeToSerial(weatherArray);
+            // send SMS message
+            sendSMS(weatherArray);
         }// end parse forecast
-        
         private static void parseConditions(string input_xml)
         {
             //Variables
@@ -717,6 +719,7 @@ namespace LCDMadness
             Console.WriteLine(clothingSuggest);
             return clothingSuggest;
         }
+        
         private static void writeToSerial(string[] weatherArgsArray)
         {
             try
@@ -761,63 +764,79 @@ namespace LCDMadness
                 //TODO: SOME ERROR HANDLING HERE
                 Console.WriteLine(e.ToString());
             }
-        }                       
-        private static void parseForecastLinq(string input_xml)             
+        }
+
+        private static void sendSMS(string[] weatherArgsArray)
         {
-            //Variables
-            string fahrenheit = "";
+            // Find your Account Sid and Auth Token at twilio.com/user/account
+            string AccountSid = "AC6e8e691239a3f5f6d1377423e8c12827";
+            string AuthToken = "e033661f0066b6431462230e96904a9c";
+
+            var twilio = new TwilioRestClient(AccountSid, AuthToken);
+            var message = twilio.SendMessage("+19287234375", "+13604027250", weatherArgsArray[0], "");
+            // working to troubleshoot this: https://www.twilio.com/docs/errors/21606
+
+            Console.WriteLine(message.Sid);
+        }
+        
+
+        //not using linq code right now
+        //private static void parseForecastLinq(string input_xml)             
+        //{
+        //    //Variables
+        //    string fahrenheit = "";
           
-            var cli = new WebClient();
-            string weather = cli.DownloadString(input_xml);
+        //    var cli = new WebClient();
+        //    string weather = cli.DownloadString(input_xml);
 
-            var reader = XmlReader.Create(new StringReader(weather));
-            // using XElement from system.xml.linq
-            XElement element = XElement.Load(reader, LoadOptions.SetBaseUri);
+        //    var reader = XmlReader.Create(new StringReader(weather));
+        //    // using XElement from system.xml.linq
+        //    XElement element = XElement.Load(reader, LoadOptions.SetBaseUri);
 
-            IEnumerable<XElement> items = element.DescendantsAndSelf();
+        //    IEnumerable<XElement> items = element.DescendantsAndSelf();
 
-            foreach (var xElement in items) 
-            {
-                fahrenheit = GetAttributeValue("high", xElement);
-            }
+        //    foreach (var xElement in items) 
+        //    {
+        //        fahrenheit = GetAttributeValue("high", xElement);
+        //    }
             
-            Console.WriteLine("********************");
-            Console.WriteLine("high:            " + fahrenheit);
+        //    Console.WriteLine("********************");
+        //    Console.WriteLine("high:            " + fahrenheit);
 
-            // now write to the LCD over the serial port
-            string[] weatherArray = new string[] { fahrenheit };
-            writeToSerial(weatherArray);
-        }
-        private static string GetElementValue(string elementName, string attributeName, XElement element)
-        {
-            XElement xElement = element.Element(elementName);
+        //    // now write to the LCD over the serial port
+        //    string[] weatherArray = new string[] { fahrenheit };
+        //    writeToSerial(weatherArray);
+        //}
+        //private static string GetElementValue(string elementName, string attributeName, XElement element)
+        //{
+        //    XElement xElement = element.Element(elementName);
 
-            string value = string.Empty;
+        //    string value = string.Empty;
 
-            if (xElement != null)
-            {
-                XAttribute xAttribute = xElement.Attribute(attributeName);
+        //    if (xElement != null)
+        //    {
+        //        XAttribute xAttribute = xElement.Attribute(attributeName);
 
-                if (xAttribute != null)
-                {
-                    value = xAttribute.Value;
-                }
-            }
+        //        if (xAttribute != null)
+        //        {
+        //            value = xAttribute.Value;
+        //        }
+        //    }
 
-            return value;
-        }
-        private static string GetAttributeValue(string attributeName, XElement element)
-        {
-            XAttribute xAttribute = element.Attribute(attributeName);
+        //    return value;
+        //}
+        //private static string GetAttributeValue(string attributeName, XElement element)
+        //{
+        //    XAttribute xAttribute = element.Attribute(attributeName);
 
-            string value = string.Empty;
-            if (xAttribute != null)
-            {
-                value = xAttribute.Value;
-            }
+        //    string value = string.Empty;
+        //    if (xAttribute != null)
+        //    {
+        //        value = xAttribute.Value;
+        //    }
 
-            return value;
-        }
+        //    return value;
+        //}
       
     }
 }
