@@ -773,10 +773,15 @@ namespace LCDMadness
             string AuthToken = "e033661f0066b6431462230e96904a9c";
 
             var twilio = new TwilioRestClient(AccountSid, AuthToken);
-            var message = twilio.SendMessage("+19287234375", "+13604027250", weatherArgsArray[0], "");
-            // working to troubleshoot this: https://www.twilio.com/docs/errors/21606
+            //var message = twilio.SendMessage("+19287234375", "+13604027250", weatherArgsArray[0], "");
+            //var message = twilio.SendMessage("+15005550006", "+13604027250", weatherArgsArray[0], "");
+            var sms = twilio.SendSmsMessage("+15005550006", "+13604027250", "hello sean!");
 
-            Console.WriteLine(message.Sid);
+            // working to troubleshoot this: https://www.twilio.com/docs/errors/21606
+            // only this number works when using TEST CREDENTIALS +15005550006
+            // see this for details https://www.twilio.com/docs/api/rest/test-credentials#test-sms-messages-parameters-From
+
+            Console.WriteLine(sms.Sid);
         }
         
 
