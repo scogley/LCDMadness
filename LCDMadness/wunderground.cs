@@ -769,19 +769,32 @@ namespace LCDMadness
         private static void sendSMS(string[] weatherArgsArray)
         {
             // Find your Account Sid and Auth Token at twilio.com/user/account
-            string AccountSid = "AC6e8e691239a3f5f6d1377423e8c12827";
-            string AuthToken = "e033661f0066b6431462230e96904a9c";
-
-            var twilio = new TwilioRestClient(AccountSid, AuthToken);
-            //var message = twilio.SendMessage("+19287234375", "+13604027250", weatherArgsArray[0], "");
-            //var message = twilio.SendMessage("+15005550006", "+13604027250", weatherArgsArray[0], "");
-            var sms = twilio.SendSmsMessage("+15005550006", "+13604027250", "hello sean!");
-
+            //live creds            
+            string AccountSid = "ACf066e5242d04efe5a453ca2110480fad";
+            string AuthToken = "e9a235555901b97a651f81cbd4c5ed0f";
+            
+            //test creds
+            //string AccountSid = "AC6e8e691239a3f5f6d1377423e8c12827";
+            //string AuthToken = "e033661f0066b6431462230e96904a9c";
+            
+            var twilio = new TwilioRestClient(AccountSid, AuthToken);            
+            //var sms = twilio.SendMessage("+19287234375", "+13604027250", "hola sexy Babe! you should wear " + weatherArgsArray[0], "");
+            //var sms = twilio.SendMessage("+19287234375", "+12064455938", "hola sexy Babe! you should wear " + weatherArgsArray[0], "");
+            //var sms = twilio.SendMessage("+19287234375", "+14254207789", "hola Sandrita! tonight you should wear " + weatherArgsArray[0], "");
+            //var sms = twilio.SendMessage("+19287234375", "+12532249881", "Gustav my brotha! Tonight you should wear " + weatherArgsArray[0] + " -sean", "");
+            var sms = twilio.SendMessage("+19287234375", "+12536532132", "Nick my brotha! My sources tell me tonight you should wear " + weatherArgsArray[0] + " -sean", "");
+            
+            while (true)
+	        {
+                Console.WriteLine(sms.Sid);
+                Console.WriteLine(sms.Status); 
+	        }
+            
             // working to troubleshoot this: https://www.twilio.com/docs/errors/21606
             // only this number works when using TEST CREDENTIALS +15005550006
             // see this for details https://www.twilio.com/docs/api/rest/test-credentials#test-sms-messages-parameters-From
 
-            Console.WriteLine(sms.Sid);
+            
         }
         
 
