@@ -782,7 +782,7 @@ namespace LCDMadness
             //var sms = twilio.SendMessage("+19287234375", "+12064455938", "hola sexy Babe! you should wear " + weatherArgsArray[0], "");
             //var sms = twilio.SendMessage("+19287234375", "+14254207789", "hola Sandrita! tonight you should wear " + weatherArgsArray[0], "");
             //var sms = twilio.SendMessage("+19287234375", "+12532249881", "Gustav my brotha! Tonight you should wear " + weatherArgsArray[0] + " -sean", "");
-            var sms = twilio.SendMessage("+19287234375", "+12536532132", "Nick my brotha! My sources tell me tonight you should wear " + weatherArgsArray[0] + " -sean", "");
+            var sms = twilio.SendMessage("+19287234375", "+15037347279", "Hey mom! My sources tell me tonight you should wear " + weatherArgsArray[0] + " -sean", "");
             
             while (true)
 	        {
