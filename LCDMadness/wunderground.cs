@@ -53,6 +53,7 @@ namespace LCDMadness
             string todayForecastHiTempF = "";
             string clothingSuggest = "";
             string icon = "";
+            string icon_url = "";
 
             var cli = new WebClient();
             string weather = cli.DownloadString(input_xml);
@@ -94,6 +95,14 @@ namespace LCDMadness
                                     }
 
                                 }
+                                else if (icon_url == "")
+                                {
+                                    if (reader.Name.Equals("icon_url"))
+                                    {
+                                        reader.Read();
+                                        icon_url = reader.Value;
+                                    }
+                                }
                                 break;
                             }
                     }
@@ -110,8 +119,9 @@ namespace LCDMadness
             // now send an SMS message hard-coding recipient numbers
             string[] recipientPhones = new string[] { "+12064455938", "+13604027250" };
             // info for body text of SMS message
-            string[] weatherArray = new string[] { clothingSuggest , fcttext};
+            string[] weatherArray = new string[] { clothingSuggest , fcttext, icon_url};
             // send SMS message
+            //sendSMS(recipientPhones, weatherArray);
             sendSMS(recipientPhones, weatherArray);
             // write to LCD
             //writeToSerial(weatherArray);
@@ -609,7 +619,7 @@ namespace LCDMadness
             foreach (string recipient in recipientPhones)
             {
                 var twilio = new TwilioRestClient(AccountSid, AuthToken);
-                var sms = twilio.SendMessage("+19287234375", recipient, weatherArgsArray[0] + " " + weatherArgsArray[1], "");
+                var sms = twilio.SendMessage("+19287234375", recipient, weatherArgsArray[0] + " " + weatherArgsArray[1], new string[] { weatherArgsArray[2] });
 
                 if (sms.RestException != null)
                 {
@@ -619,7 +629,7 @@ namespace LCDMadness
                 }
             }
         }
-        
+       
         //below code not in use anymore
 
         //private static void parseConditions(string input_xml)
