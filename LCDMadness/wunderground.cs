@@ -109,7 +109,7 @@ namespace LCDMadness
             Console.WriteLine(clothingSuggest);
 
             // now write to the LCD over the serial port
-            string[] weatherArray = new string[] { clothingSuggest , icon, todayForecastHiTempF};
+            string[] weatherArray = new string[] { clothingSuggest , fcttext, todayForecastHiTempF};
             //writeToSerial(weatherArray);
             // send SMS message
             sendSMS(weatherArray);
@@ -779,7 +779,7 @@ namespace LCDMadness
             
             var twilio = new TwilioRestClient(AccountSid, AuthToken);            
             //var sms = twilio.SendMessage("+19287234375", "+13604027250", "hola sexy Babe! you should wear " + weatherArgsArray[0], "");
-            var sms1 = twilio.SendMessage("+19287234375", "+12064455938", "hola sexy Babe! you should wear " + weatherArgsArray[0] + weatherArgsArray[1] + weatherArgsArray[2], "");
+            var sms1 = twilio.SendMessage("+19287234375", "+12064455938", "kees kees mi amore! you should wear " + weatherArgsArray[0] + " " + weatherArgsArray[1] + " " + weatherArgsArray[2], "");
             //var sms = twilio.SendMessage("+19287234375", "+14254207789", "hola Sandrita! tonight you should wear " + weatherArgsArray[0], "");
             //var sms = twilio.SendMessage("+19287234375", "+12532249881", "Gustav my brotha! Tonight you should wear " + weatherArgsArray[0] + " -sean", "");
             //var sms = twilio.SendMessage("+19287234375", "+15037347279", "Hey mom! My sources tell me tonight you should wear " + weatherArgsArray[0] + " -sean", "");
@@ -790,7 +790,7 @@ namespace LCDMadness
                 string message = sms1.RestException.Message;
                 Console.WriteLine(message);
             }
-            var sms2 = twilio.SendMessage("+19287234375", "+13604027250", "Sean, you should wear " + weatherArgsArray[0] + weatherArgsArray[1] + weatherArgsArray[2], "");
+            var sms2 = twilio.SendMessage("+19287234375", "+13604027250", "Sean! you should wear " + weatherArgsArray[0] + " " + weatherArgsArray[1] + " " + weatherArgsArray[2], "");
 
             if (sms2.RestException != null)
             {
