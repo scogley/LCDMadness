@@ -117,7 +117,7 @@ namespace LCDMadness
             Console.WriteLine("message text: " + clothingSuggest + " " + fcttext);
 
             // now send an SMS message hard-coding recipient numbers
-            string[] recipientPhones = new string[] { "+12064455938", "+13604027250" };
+            string[] recipientPhones = new string[] { "+12064455938", "+13604027250", "+12536532132"};
             // info for body text of SMS message
             string[] weatherArray = new string[] { clothingSuggest , fcttext, icon_url};
             // send SMS message
