@@ -21,7 +21,7 @@ namespace LCDMadness
         {
             try {
                 //Start wunderground API request
-                Console.WriteLine("Starting C# Weather Undeground Web API Test...");
+                Console.WriteLine("Starting Weather-based Clothing Suggester v1.0");
                 string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
                 //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
@@ -108,11 +108,15 @@ namespace LCDMadness
             Console.WriteLine("icon text:          " + icon);
             Console.WriteLine(clothingSuggest);
 
-            // now write to the LCD over the serial port
-            string[] weatherArray = new string[] { clothingSuggest , fcttext, todayForecastHiTempF};
-            //writeToSerial(weatherArray);
+            // now send an SMS message
+            // hard-coding recipient numbers
+            string[] recipientPhones = new string[] { "+12064455938", "+13604027250" };
+            // info for body text of SMS message
+            string[] weatherArray = new string[] { clothingSuggest , fcttext};
             // send SMS message
-            sendSMS(weatherArray);
+            sendSMS(recipientPhones, weatherArray);
+            // write to LCD
+            //writeToSerial(weatherArray);
         }// end parse forecast
         private static void parseConditions(string input_xml)
         {
@@ -766,7 +770,7 @@ namespace LCDMadness
             }
         }
 
-        private static void sendSMS(string[] weatherArgsArray)
+        private static void sendSMS(string[] recipientPhones,string[] weatherArgsArray)
         {
             // Find your Account Sid and Auth Token at twilio.com/user/account
             //live creds            
@@ -776,34 +780,18 @@ namespace LCDMadness
             //test creds
             //string AccountSid = "AC6e8e691239a3f5f6d1377423e8c12827";
             //string AuthToken = "e033661f0066b6431462230e96904a9c";
-            
-            var twilio = new TwilioRestClient(AccountSid, AuthToken);            
-            //var sms = twilio.SendMessage("+19287234375", "+13604027250", "hola sexy Babe! you should wear " + weatherArgsArray[0], "");
-            var sms1 = twilio.SendMessage("+19287234375", "+12064455938", "kees kees mi amore! you should wear " + weatherArgsArray[0] + " " + weatherArgsArray[1] + " " + weatherArgsArray[2], "");
-            //var sms = twilio.SendMessage("+19287234375", "+14254207789", "hola Sandrita! tonight you should wear " + weatherArgsArray[0], "");
-            //var sms = twilio.SendMessage("+19287234375", "+12532249881", "Gustav my brotha! Tonight you should wear " + weatherArgsArray[0] + " -sean", "");
-            //var sms = twilio.SendMessage("+19287234375", "+15037347279", "Hey mom! My sources tell me tonight you should wear " + weatherArgsArray[0] + " -sean", "");
-
-            if (sms1.RestException != null)
-            { 
-                //an exception occurred making the REST call
-                string message = sms1.RestException.Message;
-                Console.WriteLine(message);
-            }
-            var sms2 = twilio.SendMessage("+19287234375", "+13604027250", "Sean! you should wear " + weatherArgsArray[0] + " " + weatherArgsArray[1] + " " + weatherArgsArray[2], "");
-
-            if (sms2.RestException != null)
+            foreach (string recipient in recipientPhones)
             {
-                //an exception occurred making the REST call
-                string message = sms2.RestException.Message;
-                Console.WriteLine(message);
+                var twilio = new TwilioRestClient(AccountSid, AuthToken);                
+                var sms = twilio.SendMessage("+19287234375", recipient, weatherArgsArray[0] + " " + weatherArgsArray[1], "");
+                
+                if (sms.RestException != null)
+                {
+                    //an exception occurred making the REST call
+                    string message = sms.RestException.Message;
+                    Console.WriteLine(message);
+                }    
             }
-                       
-            // working to troubleshoot this: https://www.twilio.com/docs/errors/21606
-            // only this number works when using TEST CREDENTIALS +15005550006
-            // see this for details https://www.twilio.com/docs/api/rest/test-credentials#test-sms-messages-parameters-From
-
-            
         }
         
 
