@@ -16,9 +16,9 @@ namespace LCDMadness
 {
     class wunderground
     {
-        //1 Takes a url request to wunderground, parses it, and displays the data.
-        //2 Using icon text for short string value for conditions, lookup suggested clothing based on rules
-        //3 Send an SMS message to recipient with clothing suggestion and forecast text
+        //1 Using wunderground API to get forecast data. Parse the returned XML and assign values.
+        //2 Using icon text as a short string value for conditions (sunny, cloudy, rain, etc) lookup suggested clothing based on logic in SuggestClothing method
+        //3 Send an SMS message to the recipient with clothing suggestion, forecast text and weather icon
         public static void GetWeather()
         {
             try {
