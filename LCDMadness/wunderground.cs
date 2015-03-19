@@ -31,8 +31,8 @@ namespace LCDMadness
                 //parseForecastLinq("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
 
                 // End.
-                Console.WriteLine("Press any key to exit.");
-                Console.ReadKey();
+                //Console.WriteLine("Press any key to exit.");
+                //Console.ReadKey();
             }
             catch (Exception e)
             {
