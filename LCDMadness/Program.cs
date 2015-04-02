@@ -19,8 +19,11 @@ namespace LCDMadness
 
             try
             {               
-                // get the weather and write it to the LCD display via serial port
-                wunderground.GetWeather();             
+                // get the weather forecast and send what to wear suggestion to customer
+                wunderground.GetWeather();
+                Customer customer1 = new Customer("sean", "cogley", 98021);
+                Customer2 customer2 = new Customer2();
+                
             }
             catch(Exception e) 
             {
