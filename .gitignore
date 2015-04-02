@@ -16,3 +16,14 @@ LCDMadness/obj/Debug/LCDMadness.pdb
 #ignore the cache file
 LCDMadness/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 
+#ignore the csproj assembly cache
+LCDMadness/obj/Debug/LCDMadness.csprojResolveAssemblyReference.cache
+
+#ignore the filelistabsolute.txt
+LCDMadness/obj/Debug/LCDMadness.csproj.FileListAbsolute.txt
+
+#ignore the Input.cache
+LCDMadness/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+
+#ignore the .suo
+LCDMadness.v12.suo

@@ -30,6 +30,25 @@ git branch -D master
 git fetch origin master
 
 
+HOW TO CREATE A GITIGNORE
+http://stackoverflow.com/questions/10744305/how-to-create-gitignore-file
+
+I used powershell new-item -type file -name .gitignore
+notepad .gitignore
+add the file you wish to ignore
+save
+commit the change to .gitignore
+
+git status
+	if the file is being tracked, remove it:
+git rm --cached LCDMadness/App.config
+
+
+Create the text file gitignore.txt
+Open it in a text editor and add your rules, then save and close
+Hold SHIFT, right click the folder you're in, then select Open command window here
+Then rename the file in the command line, with ren gitignore.txt .gitignore
+
 
 
 
