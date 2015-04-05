@@ -27,8 +27,7 @@ namespace LCDMadness
                 string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
                 //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
-                parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
-                //parseForecastLinq("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+                parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");                
 
                 // End.
                 //Console.WriteLine("Press any key to exit.");
@@ -36,6 +35,7 @@ namespace LCDMadness
             }
             catch (Exception e)
             {
+                //TODO write some logging or error handling here
                 Console.WriteLine(e.ToString());
                 Console.ReadLine();
             }
