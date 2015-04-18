@@ -7,7 +7,6 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
-using System.IO.Ports;
 using Twilio;
 
 
@@ -19,6 +18,8 @@ namespace LCDMadness
         //1 Using wunderground API to get forecast data. Parse the returned XML and assign values.
         //2 Using icon text as a short string value for conditions (sunny, cloudy, rain, etc) lookup suggested clothing based on logic in SuggestClothing method
         //3 Send an SMS message to the recipient with clothing suggestion, forecast text and weather icon
+        
+        //TODO: Update this method to take Zip Code as input so we can lookup the weather for each user location
         public static void GetWeather()
         {
             try {

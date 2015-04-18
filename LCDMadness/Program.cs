@@ -14,15 +14,22 @@ namespace LCDMadness
     {
         static void Main(string[] args)
         {
-            // Arduino Mega 2560 defaults to COM4 on my PC
-            // serial port sample code: http://msdn.microsoft.com/en-us/library/system.io.ports.serialport.datareceived(v=vs.110).aspx
-
+            
             try
-            {               
+            {
+                customerDB db = new customerDB();
+                List<object> customers = db.GetAllCustomers();
+                foreach (var item in customers)
+                {
+                    //TODO iterate each property here
+                }
+                
+                //Customer customers = new Customer();
+                //customers.SelectAllCustomers();
+                //Console.WriteLine(customers.firstName);
                 // get the weather forecast and send what to wear suggestion to customer
-                wunderground.GetWeather();
-                Customer customer1 = new Customer("sean", "cogley", 98021);
-                Customer2 customer2 = new Customer2();
+                //wunderground.GetWeather();
+                
                 
             }
             catch(Exception e) 
