@@ -27,3 +27,30 @@ LCDMadness/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 
 #ignore the .suo
 LCDMadness.v12.suo
+
+#ignoring more files that were added with webjobs sdk
+LCDMadness/bin/Debug/Microsoft.Azure.WebJobs.dll
+LCDMadness/bin/Debug/Microsoft.Azure.WebJobs.xml
+LCDMadness/bin/Debug/Microsoft.Data.Edm.dll
+LCDMadness/bin/Debug/Microsoft.Data.Edm.xml
+LCDMadness/bin/Debug/Microsoft.Data.OData.dll
+LCDMadness/bin/Debug/Microsoft.Data.OData.xml
+LCDMadness/bin/Debug/Microsoft.Data.Services.Client.dll
+LCDMadness/bin/Debug/Microsoft.Data.Services.Client.xml
+LCDMadness/bin/Debug/Newtonsoft.Json.dll
+LCDMadness/bin/Debug/Newtonsoft.Json.xml
+LCDMadness/bin/Debug/System.Spatial.dll
+LCDMadness/bin/Debug/System.Spatial.xml
+LCDMadness/bin/Debug/de/
+LCDMadness/bin/Debug/es/
+LCDMadness/bin/Debug/fr/
+LCDMadness/bin/Debug/it/
+LCDMadness/bin/Debug/ja/
+LCDMadness/bin/Debug/ko/
+LCDMadness/bin/Debug/ru/
+LCDMadness/bin/Debug/zh-Hans/
+LCDMadness/bin/Debug/zh-Hant/
+LCDMadness/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+UpgradeLog.htm
+UpgradeLog2.htm
+UpgradeLog3.htm
