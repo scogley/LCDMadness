@@ -17,20 +17,25 @@ namespace LCDMadness
             
             try
             {
-                customerDB db = new customerDB();
-                List<object> customers = db.GetAllCustomers();
-                foreach (var item in customers)
+                MyDataBase db = new MyDataBase();
+                // call the GetAllCustomers method and store the customer objects in a List
+                List<Person> customers = db.GetAllCustomers();                
+                if (customers != null)
                 {
-                    //TODO iterate each property here
+                    foreach (Person person in customers)
+                    {
+                        //iterate each person object field
+                        Console.WriteLine(person.firstName);
+                        Console.WriteLine(person.lastName);
+                        Console.WriteLine(person.phoneNumber);
+                        Console.WriteLine(person.temperaturePreferanceF);
+                        Console.WriteLine(person.zipCode);
+                        Console.WriteLine(person.scheduleTime);
+                    }
                 }
-                
-                //Customer customers = new Customer();
-                //customers.SelectAllCustomers();
-                //Console.WriteLine(customers.firstName);
+                Console.ReadKey();
                 // get the weather forecast and send what to wear suggestion to customer
                 //wunderground.GetWeather();
-                
-                
             }
             catch(Exception e) 
             {
