@@ -20,7 +20,7 @@ namespace LCDMadness
         //3 Send an SMS message to the recipient with clothing suggestion, forecast text and weather icon
         
         //TODO: Update this method to take Zip Code as input so we can lookup the weather for each user location
-        public static void GetWeather()
+        public static void GetWeather(string recipientPhone)
         {
             try {
                 //Start wunderground API request
@@ -28,11 +28,10 @@ namespace LCDMadness
                 string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
                 //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
-                parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");                
-
-                // End.
-                //Console.WriteLine("Press any key to exit.");
-                //Console.ReadKey();
+                string[] messageContentArray = parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+                
+                // send SMS message            
+                sendSMS(recipientPhone, messageContentArray);  
             }
             catch (Exception e)
             {
@@ -42,7 +41,7 @@ namespace LCDMadness
             }
             
         }
-        private static void parseForecast(string input_xml)
+        public static string[] parseForecast(string input_xml)
         {
             // info on parsing XML is here: https://msdn.microsoft.com/en-us/library/system.xml.xmlreader.read(v=vs.110).aspx
             // info on parsing XML with elements of the same name: http://stackoverflow.com/questions/13642633/using-xmlreader-class-to-parse-xml-with-elements-of-the-same-name
@@ -109,23 +108,14 @@ namespace LCDMadness
                     }
                 }
             }
+
             // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
-            //todayForecastHiTempF = "81";
-            //icon = "sunny";
             clothingSuggest = SuggestClothing(todayForecastHiTempF, icon, clothingSuggest);
-
-            Console.WriteLine("********************");            
-            Console.WriteLine("message text: " + clothingSuggest + " " + fcttext);
-
-            // now send an SMS message hard-coding recipient numbers
-            string[] recipientPhones = new string[] { "+12064455938", "+13604027250", "+12536532132"};
+            
             // info for body text of SMS message
-            string[] weatherArray = new string[] { clothingSuggest , fcttext, icon_url};
-            // send SMS message
-            //sendSMS(recipientPhones, weatherArray);
-            sendSMS(recipientPhones, weatherArray);
-            // write to LCD
-            //writeToSerial(weatherArray);
+            string[] messageContentArray = new string[] { clothingSuggest, fcttext, icon_url };
+            return messageContentArray;
+            
         }// end parse forecast
         private static string SuggestClothing(string todayForecastHiTempF, string icon, string clothingSuggest)
         {
@@ -607,7 +597,7 @@ namespace LCDMadness
             Console.WriteLine(clothingSuggest);
             return clothingSuggest;
         }
-        private static void sendSMS(string[] recipientPhones, string[] weatherArgsArray)
+        private static void sendSMS(string recipientPhone, string[] weatherArgsArray)
         {
             // Find your Account Sid and Auth Token at twilio.com/user/account
             //live creds            
@@ -616,19 +606,18 @@ namespace LCDMadness
 
             //test creds
             //string AccountSid = "AC6e8e691239a3f5f6d1377423e8c12827";
-            //string AuthToken = "e033661f0066b6431462230e96904a9c";
-            foreach (string recipient in recipientPhones)
-            {
-                var twilio = new TwilioRestClient(AccountSid, AuthToken);
-                var sms = twilio.SendMessage("+19287234375", recipient, weatherArgsArray[0] + " " + weatherArgsArray[1], new string[] { weatherArgsArray[2] });
+            //string AuthToken = "e033661f0066b6431462230e96904a9c";            
+            
+            var twilio = new TwilioRestClient(AccountSid, AuthToken);
+            var sms = twilio.SendMessage("+19287234375", recipientPhone, weatherArgsArray[0] + " " + weatherArgsArray[1], new string[] { weatherArgsArray[2] });
 
-                if (sms.RestException != null)
-                {
-                    //an exception occurred making the REST call
-                    string message = sms.RestException.Message;
-                    Console.WriteLine(message);
-                }
+            if (sms.RestException != null)
+            {
+                //an exception occurred making the REST call
+                string message = sms.RestException.Message;
+                Console.WriteLine(message);
             }
+            
         }
     }
 }

@@ -31,9 +31,12 @@ namespace LCDMadness
                         Console.WriteLine(person.temperaturePreferanceF);
                         Console.WriteLine(person.zipCode);
                         Console.WriteLine(person.scheduleTime);
+
+                        // send a text to the user
+                        wunderground.GetWeather(person.phoneNumber);
                     }
                 }
-                Console.ReadKey();
+                Console.ReadKey(); // DEBUGGING: to keep the console window open 
                 // get the weather forecast and send what to wear suggestion to customer
                 //wunderground.GetWeather();
             }
