@@ -26,6 +26,7 @@ namespace LCDMadness
     }
 
     public class MyDataBase
+        //note: use View>SQL Server Object Explorer to connect and manage the db
     {
         public MyDataBase()
         { 
