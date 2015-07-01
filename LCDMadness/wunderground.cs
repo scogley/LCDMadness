@@ -28,6 +28,9 @@ namespace LCDMadness
                 string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
                 //TODO: I need to dynamically lookup the URL for the desired city using the customer's zip code. Right now, this is hard-coded: "/forecast/q/VA/Seattle.xml"
+                //I need to use this: http://api.wunderground.com/api/5f9f7844dd2b0623/geolookup/q/98021.xml
+                // it will return <city>Bothell</city>
+                // use this to construct the parseForecast url below
 
                 //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
                 string[] messageContentArray = parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
