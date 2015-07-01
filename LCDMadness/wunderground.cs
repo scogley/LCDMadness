@@ -31,9 +31,12 @@ namespace LCDMadness
                 //I need to use this: http://api.wunderground.com/api/5f9f7844dd2b0623/geolookup/q/98021.xml
                 // it will return <city>Bothell</city>
                 // use this to construct the parseForecast url below
+                string city = parseGeolookup("http://api.wunderground.com/api/" + wunderground_key + "/geolookup/q/98021.xml");
+                
 
                 //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
-                string[] messageContentArray = parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+                //string[] messageContentArray = parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
+                string[] messageContentArray = parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/" + city + ".xml");
                 
                 // send SMS message            
                 sendSMS(recipientPhone, messageContentArray);  
@@ -45,7 +48,59 @@ namespace LCDMadness
                 Console.ReadLine();
             }
             
-        }
+        }        
+        
+        private static string parseGeolookup(string input_xml)
+        {            
+            // <summary>Returns an array of city, state and country strings.
+            // <para>Zip code
+            // </summary>
+            // info on parsing XML is here: https://msdn.microsoft.com/en-us/library/system.xml.xmlreader.read(v=vs.110).aspx
+            // info on parsing XML with elements of the same name: http://stackoverflow.com/questions/13642633/using-xmlreader-class-to-parse-xml-with-elements-of-the-same-name
+            // tips on using Linq and XElement are here: http://www.dotnetperls.com/xelement
+
+            // parse Geolookup
+            //Variables            
+            string city = "";
+            string state = "";
+            string country = "";
+            
+            var cli = new WebClient();
+            string geoLookup = cli.DownloadString(input_xml);
+
+            using (XmlReader reader = XmlReader.Create(new StringReader(geoLookup)))
+            {
+                while (reader.Read())
+                {
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            {
+                                // I only want to set the value for fcttext to the first occurence (which is today's forecast).
+                                // Using IF to prevent updating this value again when looping and encountering element name fcttext again
+                                if (city == "")
+                                {
+                                    if (reader.Name.Equals("city"))
+                                    {
+                                        reader.Read();
+                                        city = reader.Value;
+                                    }
+                                }                                                          
+                                break;
+                            }
+                    }
+                }
+            }
+
+            // clothingSuggest will return the string value for suggested clothing based on the forecast high temperature
+            Console.WriteLine(city + " " + state + " " + country);
+            Console.ReadLine();
+            // info for body text of SMS message
+            //string[] geoContentArray = new string[] { city, state, country };
+            //return geoContentArray;
+            return city;
+
+        }// end parse Geolookup
         public static string[] parseForecast(string input_xml)
         {
             // info on parsing XML is here: https://msdn.microsoft.com/en-us/library/system.xml.xmlreader.read(v=vs.110).aspx
