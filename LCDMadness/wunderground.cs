@@ -27,6 +27,8 @@ namespace LCDMadness
                 Console.WriteLine("Starting Weather-based Clothing Suggester v1.0");
                 string wunderground_key = "5f9f7844dd2b0623"; // You'll need to goto http://www.wunderground.com/weather/api/, and get a key to use the API.
 
+                //TODO: I need to dynamically lookup the URL for the desired city using the customer's zip code. Right now, this is hard-coded: "/forecast/q/VA/Seattle.xml"
+
                 //parseConditions("http://api.wunderground.com/api/" + wunderground_key + "/conditions/q/VA/Seattle.xml");
                 string[] messageContentArray = parseForecast("http://api.wunderground.com/api/" + wunderground_key + "/forecast/q/VA/Seattle.xml");
                 

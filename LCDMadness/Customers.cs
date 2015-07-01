@@ -40,7 +40,7 @@ namespace LCDMadness
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
 
-            cmd.CommandText = "SELECT * FROM Customers";
+            cmd.CommandText = "SELECT * FROM Customers WHERE ACTIVE = 1";
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.Connection = conn;
 
